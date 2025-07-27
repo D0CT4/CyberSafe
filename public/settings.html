@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bridge Settings</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <style>
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .settings-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>AI Bridge</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#logs" class="nav-link">
+                        <i class="fas fa-list"></i>
+                        <span>Logs</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#ai" class="nav-link">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Status</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#security" class="nav-link">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="settings.html" class="nav-link active">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div class="header">
+                <h1>Settings</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3>AI Configuration</h3>
+                    <div class="form-group">
+                        <label for="aiMode">AI Mode</label>
+                        <select id="aiMode" onchange="toggleApiKey()">
+                            <option value="gpt4all">GPT4All (Local)</option>
+                            <option value="openai">OpenAI GPT-4</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="apiKeyGroup" style="display: none;">
+                        <label for="apiKey">OpenAI API Key</label>
+                        <input type="password" id="apiKey" placeholder="Enter your OpenAI API key">
+                    </div>
+                    <div class="form-group">
+                        <label for="modelPath">Local Model Path</label>
+                        <input type="text" id="modelPath" placeholder="Path to local model">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxTokens">Max Tokens</label>
+                        <input type="number" id="maxTokens" value="2048">
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Security Settings</h3>
+                    <div class="form-group">
+                        <label for="rateLimit">Rate Limit</label>
+                        <input type="text" id="rateLimit" placeholder="e.g., 100/hour">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enableCors">
+                            Enable CORS
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>API Key Authentication</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="apiAuth" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Logging & Monitoring</h3>
+                    <div class="form-group">
+                        <label for="logLevel">Log Level</label>
+                        <select id="logLevel">
+                            <option value="debug">Debug</option>
+                            <option value="info">Info</option>
+                            <option value="warning">Warning</option>
+                            <option value="error">Error</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enableMetrics">
+                            Enable Prometheus Metrics
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enableAlerts">
+                            Enable Email Alerts
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleApiKey() {
+            const aiMode = document.getElementById('aiMode').value;
+            const apiKeyGroup = document.getElementById('apiKeyGroup');
+            apiKeyGroup.style.display = aiMode === 'openai' ? 'block' : 'none';
+        }
+
+        async function loadSettings() {
+            try {
+                const response = await fetch('/api/settings', {
+                    headers: {
+                        'X-API-Key': localStorage.getItem('apiKey') || ''
+                    }
+                });
+                const settings = await response.json();
+                
+                // Populate form fields
+                document.getElementById('aiMode').value = settings.aiMode;
+                document.getElementById('apiKey').value = settings.apiKey || '';
+                document.getElementById('modelPath').value = settings.modelPath;
+                document.getElementById('maxTokens').value = settings.maxTokens;
+                document.getElementById('rateLimit').value = settings.rateLimit;
+                document.getElementById('enableCors').checked = settings.enableCors;
+                document.getElementById('apiAuth').checked = settings.apiAuth;
+                document.getElementById('logLevel').value = settings.logLevel;
+                document.getElementById('enableMetrics').checked = settings.enableMetrics;
+                document.getElementById('enableAlerts').checked = settings.enableAlerts;
+                
+                toggleApiKey();
+            } catch (error) {
+                console.error('Failed to load settings:', error);
+            }
+        }
+
+        async function saveSettings() {
+            const settings = {
+                aiMode: document.getElementById('aiMode').value,
+                apiKey: document.getElementById('apiKey').value,
+                modelPath: document.getElementById('modelPath').value,
+                maxTokens: parseInt(document.getElementById('maxTokens').value),
+                rateLimit: document.getElementById('rateLimit').value,
+                enableCors: document.getElementById('enableCors').checked,
+                apiAuth: document.getElementById('apiAuth').checked,
+                logLevel: document.getElementById('logLevel').value,
+                enableMetrics: document.getElementById('enableMetrics').checked,
+                enableAlerts: document.getElementById('enableAlerts').checked
+            };
+
+            try {
+                const response = await fetch('/api/settings', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-API-Key': localStorage.getItem('apiKey') || ''
+                    },
+                    body: JSON.stringify(settings)
+                });
+
+                if (response.ok) {
+                    alert('Settings saved successfully!');
+                } else {
+                    throw new Error('Failed to save settings');
+                }
+            } catch (error) {
+                console.error('Failed to save settings:', error);
+                alert('Failed to save settings. Please try again.');
+            }
+        }
+
+        // Load settings when page loads
+        document.addEventListener('DOMContentLoaded', loadSettings);
+    </script>
+</body>
+</html>
