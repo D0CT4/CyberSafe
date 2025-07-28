@@ -1,33 +1,26 @@
-# AI Bridge - Secure Local-First AI System
+AI Bridge - Secure Local-First AI System
 
 [![Python Version](https://img.shields.io/badge/python-3.11+-blue.svg)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Security Rating](https://img.shields.io/badge/security-A+-brightgreen.svg)](security/README.md)
 
-## 🚀 Overview
 
-AI Bridge is a robust, production-ready AI system that provides seamless integration between local AI models (Your preferred LLM) and cloud-based solutions (Your preferred LLM). It features intelligent log monitoring, real-time data processing, and a secure API layer, all wrapped in a modern web dashboard.
+ Key Features
 
-### Key Features
 
-- 🔄 Seamless switching between local and cloud AI providers
-- 🔒 Enterprise-grade security with API key authentication
-- 📊 Real-time monitoring and visualization
-- 🤖 Local-first AI processing with Model of your choice
-- 📝 Intelligent log processing and summarization
-- 🛡️ Built-in security scanning (OWASP ZAP, Burp Suite)
-- 🧠 Self-improving AI system with alignment checking
-- ⚡ Dynamic resource optimization
-- 🎯 Adaptive task complexity management
+-  Real-time monitoring and visualization
+- Local-first AI processing with Model of your choice
+- Intelligent log processing and summarization
+-  Built-in security scanning (OWASP ZAP, Burp Suite)
 
-## 🛠️ Installation
 
-### Prerequisites
+Installation
+Prerequisites
 
 - Python 3.11+
 - Node.js 18+
 - 8GB+ RAM for local AI models
-- CUDA-compatible GPU (optional, for faster local inference)
+
 
 ### Quick Start
 
@@ -57,15 +50,12 @@ python main.py
 ```
 
 ## 🔧 Configuration
-
-### AI Providers
+AI Providers
 
 #### Local AI (Your preferred LLM)
 ```yaml
 ai_mode: your_llm
-model_path: ./models/your-model-file.gguf
-max_tokens: 2048
-temperature: 0.7
+model_path: ./models
 ```
 
 #### Cloud AI (Your preferred LLM)
@@ -73,57 +63,25 @@ temperature: 0.7
 ai_mode: your_llm
 api_key: your_api_key_here
 model: your_model
-```
 
-### Intelligence Settings
-```yaml
-self_improvement:
-  alignment_check: true
-  learning_rate: 0.01
-  update_frequency: "1h"
-  memory_retention: "30d"
 
-resource_optimization:
-  min_energy_mode: true
-  dynamic_scaling: true
-  cache_retention: "24h"
-  performance_threshold: 0.95
-
-task_management:
-  complexity_threshold: 0.7
-  auto_routing: true
-  context_optimization: true
-  energy_efficiency: "aggressive"
-```
-
-### Security Settings
-
-```yaml
-api_key_hash: your_hashed_api_key
-rate_limit: 100/hour
-cors_origins:
-  - http://localhost:3000
-  - https://your-approved-domain.com
-```
-
-## 🔐 Security Features
-
-### Authentication
+Security Features
+ Authentication
 - API Key authentication with SHA-256 hashing
 - Constant-time comparison for key validation
 - Rate limiting protection
 
-### Data Protection
+Data Protection
 - Local-first architecture for sensitive data
 - Encryption at rest for configurations
 - Secure API endpoints with CORS protection
 
-### Security Scanning
+Security Scanning
 - Automated OWASP ZAP scanning
 - Burp Suite integration
 - Regular dependency vulnerability checks
 
-## 📊 Dashboard
+Dashboard
 
 Access the dashboard at `http://localhost:5000/dashboard.html`
 
@@ -134,7 +92,7 @@ Features:
 - Log analysis
 - AI provider status
 
-## 🔍 Log Monitoring
+ Log Monitoring
 
 The system monitors log files in real-time:
 - JSON and text log support
@@ -142,35 +100,16 @@ The system monitors log files in real-time:
 - AI-powered summarization
 - Anomaly detection
 
-## � Intelligent Self-Improvement
 
-### Alignment Verification
+Intelligent Self-Improvement
+
+ Alignment Verification
 - Continuous self-assessment of model outputs
 - Real-time alignment checking with predefined ethical guidelines
 - Automatic correction and learning from interaction patterns
-- Performance metrics tracking and optimization
+- Performance metrics tracking AI Best Practices
 
-### Resource Optimization
-- Dynamic allocation based on task complexity
-- Intelligent caching of frequent queries
-- Automated scaling of computational resources
-- Energy-efficient processing paths
-
-### Task Complexity Management
-- Automatic query complexity assessment
-- Smart routing to appropriate processing levels
-- Minimal energy path selection for responses
-- Adaptive context window optimization
-
-### Learning from Interactions
-- Pattern recognition in user queries
-- Automated improvement of response accuracy
-- Historical performance analysis
-- Self-adjusting response templates
-
-## �🤖 AI Best Practices
-
-### Model Selection
+ Model Selection
 
 1. **Local-First Approach**
    - Use your preferred LLM for sensitive data
@@ -181,8 +120,7 @@ The system monitors log files in real-time:
    - Your preferred LLM for complex tasks
    - API key rotation and monitoring
    - Fallback mechanisms
-
-### Responsible AI Usage
+Responsible AI Usage
 
 1. **Data Privacy**
    - Local processing for sensitive information
@@ -205,14 +143,7 @@ The system monitors log files in real-time:
 - Dynamic complexity assessment
   ```python
   complexity_score = system.assess_complexity(query)
-  optimal_path = system.get_efficient_path(complexity_score)
-  ```
-- Adaptive resource allocation
-  ```python
-  resources = system.allocate_resources({
-      'task_type': 'query_processing',
-      'complexity': complexity_score,
-      'energy_constraint': max_energy
+  optimal_path = system.get_efficient_path(complexity_s
   })
   ```
 - Smart caching system
@@ -298,152 +229,38 @@ pytest tests/test_integration.py
 locust -f tests/locustfile.py
 ```
 
-## 📚 API Documentation
 
-### Intelligence Layer Endpoints
-
-#### Alignment Check
-```http
-POST /ai/alignment/check
-Content-Type: application/json
-X-API-Key: your_api_key
-
-{
-  "response": "AI response to verify",
-  "context": "Task context",
-  "metrics": {
-    "energy_usage": float,
-    "response_time": float,
-    "complexity_score": float
-  }
-}
-```
-
-#### Performance Optimization
-```http
-POST /ai/optimize
-Content-Type: application/json
-X-API-Key: your_api_key
-
-{
-  "task_type": "classification|generation|analysis",
-  "complexity": float,
-  "required_accuracy": float,
-  "energy_constraints": {
-    "max_usage": float,
-    "priority_level": integer
-  }
-}
-```
-
-#### Learning Update
-```http
-POST /ai/learn
-Content-Type: application/json
-X-API-Key: your_api_key
-
-{
-  "interaction_data": {
-    "query": "User query",
-    "response": "AI response",
-    "feedback": "User feedback",
-    "performance_metrics": {
-      "accuracy": float,
-      "energy_efficiency": float,
-      "response_time": float
-    }
-  }
-}
-```
-
-#### Energy-Efficient Query
-```http
-POST /ai/efficient-query
-Content-Type: application/json
-X-API-Key: your_api_key
-
-{
-  "query": "Your query here",
-  "max_energy": float,
-  "min_accuracy": float,
-  "use_cache": boolean,
-  "context": [optional_conversation_history]
-}
-```
-
-### Chat Endpoint
-```http
-POST /chat
-Content-Type: application/json
-X-API-Key: your_api_key
-
-{
-  "prompt": "Your message here",
-  "context": [optional_conversation_history],
-  "optimization": {
-    "energy_efficient": boolean,
-    "use_cache": boolean,
-    "complexity_threshold": float
-  }
-}
-```
-
-### Status Endpoint
-```http
+### Status 
 GET /status
 X-API-Key: your_api_key
-```
 
-### Provider Switch
-```http
+
 POST /switch-provider
 Content-Type: application/json
 X-API-Key: your_api_key
 
-{
-  "mode": "your_llm",
-  "additional_params": {}
-}
-```
+ Updates and Maintenance
 
-## 🔄 Updates and Maintenance
-
-### Model Updates
-```bash
-# Update local models
+Update local models
 python scripts/update_models.py
 
-# Check for new versions
+Check for new versions
 python scripts/check_updates.py
-```
 
-### Security Updates
-```bash
+
+Security Scan
 # Run security scan
 python security/run_security_scans.py
 
 # Update dependencies
 pip install -r requirements.txt --upgrade
-```
 
-## 🤝 Contributing
+
+Contributing
 
 1. Fork the repository
 2. Create your feature branch
 3. Run tests and security checks
 4. Submit a pull request
 
-## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 Resources
-
-- [Your preferred LLM Documentation]
-- [Your preferred LLM Documentation]
-- [Security Best Practices](https://owasp.org/www-project-top-ten/)
-- [AI Ethics Guidelines](https://www.microsoft.com/en-us/ai/responsible-ai)
-
-## ⚠️ Disclaimer
-
-This software is provided "as is" without warranty of any kind. While we strive for security and reliability, users should perform their own security audits and risk assessments before deploying in production.
